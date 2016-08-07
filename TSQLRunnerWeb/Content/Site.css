@@ -1,0 +1,38 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+.queryresult {
+    border: solid 2px #00ff90;
+}
+
+.queryresult td {
+    padding: 5px;
+    border: solid 2px #00ff90;
+}
+
+.queryresult th {
+    padding: 6px 5px;
+    text-align: left;
+    background-color: #00ff90;
+    border: solid 1px #00ff90;
+}
+.scroller {
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 100%;
+  height: 360px;
+}

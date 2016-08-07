@@ -1,0 +1,78 @@
+﻿@model TSQLRunnerWeb.Models.IndexModel
+@using (Ajax.BeginForm("Query", "Home", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "main" }, new { id = "runQueryForm", role = "form" })) {
+
+  @Html.AntiForgeryToken();
+  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+  <div class="form-group">
+    @Html.EditorFor(m => m.Query, new { htmlAttributes = new { @class = "form-control", rows = 18, cols = 100 } })
+    @Html.ValidationMessageFor(m => m.Query, "", new { @class = "text-danger" })
+    <input id="runQuery" type="button" value="Run" onclick="$('#runQueryForm').submit();" />
+  </div>
+}
+@if (Model.Result != null) {
+  <div style="clear:both;" id="resultsTab">
+    <ul>
+      <li><a href="#queryresult">実行結果</a></li>
+      <li><a href="#message">メッセージ</a></li>
+      <li><a href="#queryplan">実行プラン</a></li>
+    </ul>
+    <div id="queryresult">
+      @if (Model.Result?.QueryResult?.Any() ?? false) {
+        <div class="scroller">
+          <table class="queryresult">
+            <thead>
+              <tr>
+                @foreach (var columnName in Model.Result.QueryResult.First().ColumnNames) {
+                  <th class="col">@(columnName)</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @foreach (var row in Model.Result.QueryResult) {
+                <tr id="row">
+                  @foreach (var item in row.Value) {
+                    <td>@(item.Value)</td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+    <div id="message">
+      <div class="scroller">
+        <pre>@(Model.Result.Message)</pre>
+      </div>
+    </div>
+    <div id="queryplan">
+      <div class="scroller">
+        @if (Model.Result.ExecPlan?.ExecPlanHtml != null) {
+          @Html.Raw(Model.Result.ExecPlan.ExecPlanHtml)
+        }
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $(function () {
+      $('#resultsTab').tabs();
+    });
+  </script>
+}
+
+<script type="text/javascript">
+  $('#Query').keydown(function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.keyCode == 13) {
+      $('#runQuery').eq(0).click();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.keyCode == 38) { // ↑
+      QS.prevQuery($('#Query'));
+    }
+    if ((e.ctrlKey || e.metaKey) && e.keyCode == 40) { // ↓
+      QS.nextQuery($('#Query'));
+    }
+  });
+  $('#runQuery').click(function (e) {
+    QS.storeQuery($('#Query').val());
+  });
+</script>

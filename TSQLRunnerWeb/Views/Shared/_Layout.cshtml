@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@ViewBag.Title</title>
+  @Styles.Render("~/Content/css")
+  @Styles.Render("~/Content/themes/base/css")
+  @Scripts.Render("~/bundles/modernizr")
+  @Scripts.Render("~/bundles/jquery")
+  @Scripts.Render("~/bundles/jqueryui")
+  @Scripts.Render("~/bundles/bootstrap")
+  @Scripts.Render("~/bundles/jqueryunobtrusive")
+  <script src="~/Scripts/App/QueryStore.js"></script>
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        @Html.ActionLink("TSQLRunner Web", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+      </div>
+    </div>
+  </div>
+  <div class="container body-content">
+    <div class="col-lg-2 col-md-4">
+      <div id="explorer">
+        <p>Explorer</p>
+        @Html.Partial("Explorer")
+      </div>
+    </div>
+    <div class="col-lg-10 col-md-8">
+      @RenderBody()
+    </div>
+    <hr />
+    <footer>
+      <p>&copy; @DateTime.Now.Year - TSQLRunner Web</p>
+    </footer>
+  </div>
+  @RenderSection("scripts", required: false)
+</body>
+</html>

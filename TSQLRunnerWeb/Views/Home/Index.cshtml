@@ -1,0 +1,14 @@
+﻿@model TSQLRunnerWeb.Models.IndexModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<div id="main">
+  @Html.Partial("_Main", Model)
+</div>
+@section scripts {
+  <script type="text/javascript">
+    $(function () {
+      QS.loadQueries();
+    });
+  </script>
+}
